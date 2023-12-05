@@ -1,6 +1,6 @@
 # CP320 Exploration Project - Calculator Program
 
-This program uses a TTP299 Capacitave Keybad and a Raspberry Pi
+This project uses a TTP229 Capacitive Keypad to craft an interactive calculator program and a Raspberry Pi for computation. The TTP229 Capacitive Keypad serves as the user interface, enabling users to input numerical values and operators seamlessly. The program allows users to evaluate basic mathematical expressions that include a single operation at a time for streamlined functionality
 
 # How it works
 
