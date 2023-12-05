@@ -15,7 +15,6 @@ class Controller:
         GPIO.setup(self.SCLPin,GPIO.OUT)
         GPIO.setup(self.SDOPin,GPIO.IN)
         GPIO.output(self.SCLPin,GPIO.HIGH)
-        
         # String that represents mathematical expression
         self.expressionString = ''
         self.operationAlreadyUsed = False
@@ -23,6 +22,8 @@ class Controller:
         self.NUM_BITS = 16
         self.DEBOUNCE_DELAY = 0.2
         self.BIT_DELAY = 0.005
+
+        time.sleep(self.BIT_DELAY)
 
     '''
         Will run the program to get input from the number pad and use the calculator to compute the string expression
@@ -39,7 +40,8 @@ class Controller:
             while True:
                 # Set button to 1 after every iteration
                 button=1
-                
+                time.sleep(self.BIT_DELAY)
+
                 while button < 17:
                     correctButton=button
                     if (correctButton==17):
@@ -52,22 +54,21 @@ class Controller:
                     if not keyval and not buttonPressed:
                         if(correctButton == 15):
                             # When 15 (clear) is pressed, clear the expression
-                            self.expressionString = ''
-                            print('Expression Cleared!')
+                            self.clear()
                         elif(correctButton == 16):
                             print('Calculating expression...')
                             # When 16 (enter) is pressed, evaluate the expression
                             result = self.calculator.evaluateExpression(self.expressionString)
-                            print(f'Your expression: {self.expressionString}')
+                            print('--------------------------------------------')
                             print(f'Calculated result: {result}')
                             print('Continue entering numerical values and mathematical operations if you would like to calculate another expression!')
                             print('--------------------------------------------')
-                        elif(correctButton in [11, 12, 12, 14]): # Any operation button selected
+                            self.clear()
+                        elif(correctButton in [11, 12, 13, 14]): # Any operation button selected
                             # If operation symbol already in expression string
                             if(self.operationAlreadyUsed):
                                 print('You cannot use more than 1 operation symbol! Please try again.\n')
                             else:
-                                print('add operation')
                                 # Transform the number of the button pressed to a operation symbol
                                 operationSymbol = self.transformNumToOperationSymbol(correctButton)
                                 self.operationAlreadyUsed = True
@@ -76,7 +77,6 @@ class Controller:
                             # If 10 is selected, make it add a 0 instead of 10
                             self.expressionString += '0'
                         else:
-                            print('yes add')
                             self.expressionString += str(correctButton)
                        
                         buttonPressed=True
@@ -104,5 +104,12 @@ class Controller:
         # Return the operation symbol or None if not found
         return operation_mapping.get(buttonNumber)
 
-    def cleanup():
+    '''
+        Function to clear the current expression
+    '''
+    def clear(self):
+        self.operationAlreadyUsed = False
+        self.expressionString = ''
+
+    def cleanup(self):
         GPIO.cleanup
