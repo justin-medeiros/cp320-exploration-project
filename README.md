@@ -5,3 +5,8 @@ This project uses a TTP229 Capacitive Keypad to craft an interactive calculator 
 # How it works
 
 The user will input values when touching a value on the keypad and when the user presses on the enter button, the expression will be evaluated.
+
+# Demo
+
+https://github.com/justin-medeiros/cp320-exploration-project/assets/81980956/80dcb96b-ddc9-40e6-891c-08d568b611f9
+
